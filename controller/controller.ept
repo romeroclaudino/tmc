@@ -1,0 +1,73 @@
+node radiator(up1, down1, up2, down2, c1, c2: bool) returns (power: int)
+let
+    automaton
+     state Off do
+        power = 0
+     unless up1 or not c1 then FrostProtection
+
+     state FrostProtection do
+        power = 300
+     unless down1 or not c1 then Off |
+            up1 & c1 then Eco |
+            up2 & c2 then High
+
+     state Eco do
+        power = 1500
+     unless down1 or not c1 then FrostProtection |
+            up2 & c2 then High
+
+     state High do
+        power = 2000
+     unless down2 & not c2 then FrostProtection |
+            down1 or not c1 then Eco
+    end 
+tel
+
+node room(presence: bool) returns (room_oc: bool)
+let
+    automaton
+     state Empty do
+        room_oc = false
+     unless presence then Occupied
+
+     state Occupied do
+        room_oc = true
+     unless not presence then Empty
+    end 
+tel
+
+node lamp(userLamp, contLamp: bool) returns (sLamp:bool)
+let
+    automaton
+     state OFF do
+        sLamp = false; 
+     unless userLamp or not contLamp then ON
+     state ON do
+        sLamp = true;
+     unless userLamp & contLamp then OFF
+    end 
+tel
+
+node tv(userTV, contTV: bool) returns (sTV:bool)
+let
+    automaton
+     state OFF do
+        sTV = false; 
+     unless userTV or not contTV then ON
+     state ON do
+        sTV = true;
+     unless userTV & contTV then OFF
+    end 
+tel
+
+node mainNode(up1, down1, up2, down2, presence, userLamp, userTV: bool) returns (radPower: int; room_oc, lamp_on, tv_on: bool)
+    contract
+     enforce (not room_oc or (lamp_on or tv_on)) & (room_oc or (not(lamp_on or tv_on) & (radPower = 0 or radPower = 300)))
+     with(c1, c2, contLamp, contTV: bool)
+let
+    radPower = inlined radiator(up1, down1, up2, down2, c1, c2);
+    room_oc = inlined room(presence);
+    lamp_on = inlined lamp(userLamp, contLamp);
+    tv_on = inlined tv(userTV, contTV)
+
+tel
