@@ -36,38 +36,32 @@ let
     end 
 tel
 
-node lamp(userLamp, contLamp: bool) returns (sLamp:bool)
+node lighter(userLamp, cont1, cont2: bool) returns (sLamp:bool)
 let
     automaton
      state OFF do
         sLamp = false; 
-     unless userLamp or not contLamp then ON
+     unless (userLamp & cont1) or not cont2 then ON
      state ON do
         sLamp = true;
-     unless userLamp & contLamp then OFF
+     unless (userLamp & cont2) or not cont1 then OFF
     end 
 tel
 
-node tv(userTV, contTV: bool) returns (sTV:bool)
-let
-    automaton
-     state OFF do
-        sTV = false; 
-     unless userTV or not contTV then ON
-     state ON do
-        sTV = true;
-     unless userTV & contTV then OFF
-    end 
-tel
 
 node mainNode(up1, down1, up2, down2, presence, userLamp, userTV: bool) returns (radPower: int; room_oc, lamp_on, tv_on: bool)
     contract
-     enforce (not room_oc or (lamp_on or tv_on)) & (room_oc or (not(lamp_on or tv_on) & (radPower = 0 or radPower = 300)))
-     with(c1, c2, contLamp, contTV: bool)
+        var rule1, rule4: bool;
+        let
+        rule1 = not room_oc or (lamp_on or tv_on);
+        rule4 = room_oc or (not(lamp_on or tv_on) & (radPower = 0 or radPower = 300))
+        tel
+     enforce  rule1 & rule4
+     with(c1, c2, contLamp1, contLamp2, contTV1, contTV2: bool)
 let
     radPower = inlined radiator(up1, down1, up2, down2, c1, c2);
     room_oc = inlined room(presence);
-    lamp_on = inlined lamp(userLamp, contLamp);
-    tv_on = inlined tv(userTV, contTV)
+    lamp_on = inlined lighter(userLamp, contLamp1, contLamp2);
+    tv_on = inlined lighter(userTV, contTV1, contTV2)
 
 tel
