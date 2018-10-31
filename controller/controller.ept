@@ -18,7 +18,7 @@ let
 
      state High do
         power = 2000
-     unless down2 & not c2 then FrostProtection |
+     unless down2 or not c2 then FrostProtection |
             down1 or not c1 then Eco
     end 
 tel
