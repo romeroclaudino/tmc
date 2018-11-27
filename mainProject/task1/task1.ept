@@ -1,0 +1,47 @@
+node robot(guestH, foodO, deliveringF, endS: bool) returns (currentState: int)
+let
+    automaton
+     state Idle do
+     currentState = 0;
+     unless guestH & (not foodO & not deliveringF) then GuestHosting |
+          	foodO & (not guestH & not deliveringF) then FoodOrdering |
+            deliveringF & (not guestH & not foodO) then DeliveringFood
+
+     state GuestHosting do
+     currentState = 1;
+     unless endS then Idle
+
+     state FoodOrdering do
+     currentState = 2;
+     unless endS then DeliveringFood
+
+     state DeliveringFood do
+     currentState = 3;
+     unless endS then Idle
+    end
+tel
+
+(* 1 - GuestHosting
+2 - FoodOrdering
+3 - DeliveringFood *)
+
+node mainNode(robot1endS,robot2endS, robot3endS, chegou: bool) returns (currentStRobot1, currentStRobot2, currentStRobot3: int)    
+contract
+        var rule1, rule2: bool;
+        let
+        	rule1 = (currentStRobot1 = 1 or (currentStRobot2 = 1 or currentStRobot3 = 1)) &
+                    (currentStRobot1 = 2 or (currentStRobot2 = 2 or currentStRobot3 = 2)) &
+                    (currentStRobot1 = 3 or (currentStRobot2 = 3 or currentStRobot3 = 3));
+
+            rule2 = not chegou or rule1
+        tel
+     enforce rule2
+     with(robot1GuestH, robot1FoodO, robot1DeliveringF,
+          robot2GuestH, robot2FoodO, robot2DeliveringF,
+          robot3GuestH, robot3FoodO, robot3DeliveringF: bool)
+let
+    currentStRobot1 = inlined robot(robot1GuestH, robot1FoodO, robot1DeliveringF, robot1endS);
+    currentStRobot2 = inlined robot(robot2GuestH, robot2FoodO, robot2DeliveringF, robot2endS);
+    currentStRobot3 = inlined robot(robot3GuestH, robot3FoodO, robot3DeliveringF, robot3endS)
+
+tel
