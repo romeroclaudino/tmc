@@ -1,4 +1,4 @@
-node client(ends: bool) returns (currentState: int)
+node client(endS: bool) returns (currentState: int)
 let
     automaton
      state Idle do
@@ -20,7 +20,7 @@ let
 tel
 
 
-node robot(guestH, foodO, deliveringF, c, endS: bool) returns (currentState: int)
+node robot(guestH, foodO, deliveringF, c, c2, endS: bool) returns (currentState: int)
 let
     automaton
      state Idle do
@@ -31,15 +31,15 @@ let
 
      state GuestHosting do
      currentState = 1;
-     unless endS & c then Idle
+     unless endS & c or c2 then Idle
 
      state FoodOrdering do
      currentState = 2;
-     unless endS & c then DeliveringFood
+     unless endS & c or c2 then DeliveringFood
 
      state DeliveringFood do
      currentState = 3;
-     unless endS & c then Idle | c then FoodOrdering | c then GuestHosting
+     unless endS & c or c2 then Idle
     end
 tel
 
@@ -56,8 +56,9 @@ contract
                     (currentStRobot1 = 2 or currentStRobot2 = 2 or currentStRobot3 = 2) &
                     (currentStRobot1 = 3 or currentStRobot2 = 3 or currentStRobot3 = 3);
 
-            rule2 = currentStRobot1 + currentStRobot2 + currentStRobot3 > 5 & 
-                    currentStRobot1 = 0 or currentStRobot2 = 0 or currentStRobot3 = 0;
+            (* rule2 = currentStRobot1 + currentStRobot2 + currentStRobot3 > 5 &  *)
+                    (* currentStRobot1 = 0 or currentStRobot2 = 0 or currentStRobot3 = 0; *)
+               rule2 = currentStRobot1 = 0 or currentStRobot2 = 0 or currentStRobot3 = 0;
 
             (* rule2 = (currentStRobot1 = 3 & currentStRobot2 = 3) *)
                  (* or (currentStRobot1 = 3 & currentStRobot3 = 3)  *)
@@ -69,12 +70,12 @@ contract
 
         tel
      enforce (not (currentStClient = 1) or rule1) & (not (currentStClient = 2) or rule2)
-     with(robot1GuestH, robot1FoodO, robot1DeliveringF, c1,
-          robot2GuestH, robot2FoodO, robot2DeliveringF, c2,
-          robot3GuestH, robot3FoodO, robot3DeliveringF, c3: bool)
+     with(robot1GuestH, robot1FoodO, robot1DeliveringF, c1, c21,
+          robot2GuestH, robot2FoodO, robot2DeliveringF, c2, c22,
+          robot3GuestH, robot3FoodO, robot3DeliveringF, c3, c23: bool)
 let
-    currentStRobot1 = inlined robot(robot1GuestH, robot1FoodO, robot1DeliveringF, c1, robot1endS);
-    currentStRobot2 = inlined robot(robot2GuestH, robot2FoodO, robot2DeliveringF, c2, robot2endS);
-    currentStRobot3 = inlined robot(robot3GuestH, robot3FoodO, robot3DeliveringF, c3, robot3endS)
+    currentStRobot1 = inlined robot(robot1GuestH, robot1FoodO, robot1DeliveringF, c1, c21, robot1endS);
+    currentStRobot2 = inlined robot(robot2GuestH, robot2FoodO, robot2DeliveringF, c2, c22, robot2endS);
+    currentStRobot3 = inlined robot(robot3GuestH, robot3FoodO, robot3DeliveringF, c3, c23, robot3endS);
     currentStClient = inlined client(clientEndS)
 tel
