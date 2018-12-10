@@ -1,4 +1,4 @@
-node robot(guestH, foodO, deliveringF, endS: bool) returns (currentState: int)
+node robot(guestH, foodO, deliveringF, c, endS: bool) returns (currentState: int)
 let
     automaton
      state Idle do
@@ -9,15 +9,15 @@ let
 
      state GuestHosting do
      currentState = 1;
-     unless endS then Idle
+     unless endS & c then Idle
 
      state FoodOrdering do
      currentState = 2;
-     unless endS then DeliveringFood
+     unless endS & c then DeliveringFood
 
      state DeliveringFood do
      currentState = 3;
-     unless endS then Idle
+     unless endS & c then Idle | c then FoodOrdering | c then GuestHosting
     end
 tel
 
@@ -25,23 +25,34 @@ tel
 2 - FoodOrdering
 3 - DeliveringFood *)
 
-node mainNode(robot1endS,robot2endS, robot3endS, chegou: bool) returns (currentStRobot1, currentStRobot2, currentStRobot3: int)    
+node mainNode(robot1endS,robot2endS, robot3endS, arrival: bool) returns (currentStRobot1, currentStRobot2, currentStRobot3: int)    
 contract
-        var rule1, rule2: bool;
+        var rule1: bool; 
+        (* var rule1, rule2: bool;  *)
         let
-        	rule1 = (currentStRobot1 = 1 or (currentStRobot2 = 1 or currentStRobot3 = 1)) &
-                    (currentStRobot1 = 2 or (currentStRobot2 = 2 or currentStRobot3 = 2)) &
-                    (currentStRobot1 = 3 or (currentStRobot2 = 3 or currentStRobot3 = 3));
+        	rule1 = (currentStRobot1 = 1 or currentStRobot2 = 1 or currentStRobot3 = 1) &
+                    (currentStRobot1 = 2 or currentStRobot2 = 2 or currentStRobot3 = 2) &
+                    (currentStRobot1 = 3 or currentStRobot2 = 3 or currentStRobot3 = 3);
 
-            rule2 = not chegou or rule1
+            (* rule2 = currentStRobot1 + currentStRobot2 + currentStRobot3 > 5 & 
+                    currentStRobot1 = 0 or currentStRobot2 = 0 or currentStRobot3 = 0; *)
+
+(*             rule2 = (currentStRobot1 = 3 & currentStRobot2 = 3)
+                 or (currentStRobot1 = 3 & currentStRobot3 = 3) 
+                 or (currentStRobot2 = 3 & currentStRobot3 = 3); *)
+                    
+                (* rule1 = (currentStRobot1 + currentStRobot2 + currentStRobot3) = 6; (* & *)
+                           currentStRobot1 > 0 & currentStRobot2 > 0 & currentStRobot3 > 0; *)
+            (* arrivalScenario = currentStRobot1 = 1 & currentStRobot2 = 2 & currentStRobot3 = 3; *)
+
         tel
-     enforce rule2
-     with(robot1GuestH, robot1FoodO, robot1DeliveringF,
-          robot2GuestH, robot2FoodO, robot2DeliveringF,
-          robot3GuestH, robot3FoodO, robot3DeliveringF: bool)
+     enforce not arrival or rule1
+     (* enforce not arrival or arrivalScenario *)
+     with(robot1GuestH, robot1FoodO, robot1DeliveringF, c1,
+          robot2GuestH, robot2FoodO, robot2DeliveringF, c2,
+          robot3GuestH, robot3FoodO, robot3DeliveringF, c3: bool)
 let
-    currentStRobot1 = inlined robot(robot1GuestH, robot1FoodO, robot1DeliveringF, robot1endS);
-    currentStRobot2 = inlined robot(robot2GuestH, robot2FoodO, robot2DeliveringF, robot2endS);
-    currentStRobot3 = inlined robot(robot3GuestH, robot3FoodO, robot3DeliveringF, robot3endS)
-
+    currentStRobot1 = inlined robot(robot1GuestH, robot1FoodO, robot1DeliveringF, c1, robot1endS);
+    currentStRobot2 = inlined robot(robot2GuestH, robot2FoodO, robot2DeliveringF, c2, robot2endS);
+    currentStRobot3 = inlined robot(robot3GuestH, robot3FoodO, robot3DeliveringF, c3, robot3endS)
 tel

@@ -1,7 +1,7 @@
 
 SIM_PROG=task1
 # same as SIM_PROG, capitalized
-SIM_MOD=mainNode
+SIM_MOD=MainNode
 SIM_NODE=mainNode
 CONTRACT_NODE=mainNode
 
