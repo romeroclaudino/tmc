@@ -1,5 +1,5 @@
 
-SIM_PROG=task1
+SIM_PROG=mainProject
 # same as SIM_PROG, capitalized
 SIM_MOD=MainNode
 SIM_NODE=mainNode
