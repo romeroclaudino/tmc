@@ -59,14 +59,15 @@ let
     end
 tel
 
-node mainNode(clientEndS, clientEndS2, clientEndS3: bool) returns (idRobot1, ghRobot1, foRobot1, dfRobot1,
+node mainNode(clientEndS, clientEndS2, clientEndS3, clientEndS4 : bool) returns (idRobot1, ghRobot1, foRobot1, dfRobot1,
                                                                    idRobot2, ghRobot2, foRobot2, dfRobot2,
                                                                    idRobot3, ghRobot3, foRobot3, dfRobot3,
                                                                    idRobot4, ghRobot4, foRobot4, dfRobot4,
-                                                                   idRobot5, ghRobot5, foRobot5, dfRobot5: bool;
-                                                                   currentStClient, currentStClient2, currentStClient3: int)
+                                                                   idRobot5, ghRobot5, foRobot5, dfRobot5,
+                                                                   idRobot6, ghRobot6, foRobot6, dfRobot6: bool;
+                                                                   currentStClient, currentStClient2, currentStClient3, currentStClient4: int)
 contract
-        var rule1, rule2, rule3, rule4, rule5, rule6, rule7, rule8, rule9: bool; 
+        var rule1, rule2, rule3, rule4, rule5, rule6, rule7, rule8, rule9, rule10, rule11, rule12: bool; 
         let
 
         (*A set of guests Arriving*)
@@ -151,32 +152,131 @@ contract
                      (dfRobot1 = true & dfRobot3 = true & dfRobot4 = true & dfRobot5 = true) or
                      (dfRobot2 = true & dfRobot3 = true & dfRobot4 = true & dfRobot5 = true));
 
+            rule10 = (ghRobot1 = true or ghRobot2 = true or ghRobot3 = true or ghRobot4 = true or ghRobot5 = true or ghRobot6 = true ) &
+
+                    ((foRobot1 = true & foRobot2 = true & foRobot3 = true & foRobot4 = true) or
+                     (foRobot1 = true & foRobot2 = true & foRobot3 = true & foRobot5 = true) or
+                     (foRobot1 = true & foRobot2 = true & foRobot3 = true & foRobot6 = true) or
+                     (foRobot1 = true & foRobot2 = true & foRobot4 = true & foRobot5 = true) or
+                     (foRobot1 = true & foRobot2 = true & foRobot4 = true & foRobot6 = true) or
+                     (foRobot1 = true & foRobot2 = true & foRobot5 = true & foRobot6 = true) or
+                     (foRobot1 = true & foRobot3 = true & foRobot4 = true & foRobot5 = true) or
+                     (foRobot1 = true & foRobot3 = true & foRobot4 = true & foRobot6 = true) or
+                     (foRobot1 = true & foRobot3 = true & foRobot5 = true & foRobot6 = true) or
+                     (foRobot1 = true & foRobot4 = true & foRobot5 = true & foRobot6 = true) or
+                     (foRobot2 = true & foRobot3 = true & foRobot4 = true & foRobot5 = true) or
+                     (foRobot2 = true & foRobot3 = true & foRobot4 = true & foRobot6 = true) or
+                     (foRobot2 = true & foRobot3 = true & foRobot5 = true & foRobot6 = true) or
+                     (foRobot2 = true & foRobot4 = true & foRobot5 = true & foRobot6 = true) or
+                     (foRobot3 = true & foRobot4 = true & foRobot5 = true & foRobot6 = true)) &
+
+                    (dfRobot1 = true or dfRobot2 = true or dfRobot3 = true or dfRobot4 = true or dfRobot5 = true or dfRobot6 = true);
+
+
+
+            rule11 = (idRobot1 = true or idRobot2 = true or idRobot3 = true or idRobot4 = true or idRobot5 = true or idRobot6 = true ) &
+
+                    ((foRobot1 = true & foRobot2 = true & foRobot3 = true & foRobot4 = true) or
+                     (foRobot1 = true & foRobot2 = true & foRobot3 = true & foRobot5 = true) or
+                     (foRobot1 = true & foRobot2 = true & foRobot3 = true & foRobot6 = true) or
+                     (foRobot1 = true & foRobot2 = true & foRobot4 = true & foRobot5 = true) or
+                     (foRobot1 = true & foRobot2 = true & foRobot4 = true & foRobot6 = true) or
+                     (foRobot1 = true & foRobot2 = true & foRobot5 = true & foRobot6 = true) or
+                     (foRobot1 = true & foRobot3 = true & foRobot4 = true & foRobot5 = true) or
+                     (foRobot1 = true & foRobot3 = true & foRobot4 = true & foRobot6 = true) or
+                     (foRobot1 = true & foRobot3 = true & foRobot5 = true & foRobot6 = true) or
+                     (foRobot1 = true & foRobot4 = true & foRobot5 = true & foRobot6 = true) or
+                     (foRobot2 = true & foRobot3 = true & foRobot4 = true & foRobot5 = true) or
+                     (foRobot2 = true & foRobot3 = true & foRobot4 = true & foRobot6 = true) or
+                     (foRobot2 = true & foRobot3 = true & foRobot5 = true & foRobot6 = true) or
+                     (foRobot2 = true & foRobot4 = true & foRobot5 = true & foRobot6 = true) or
+                     (foRobot3 = true & foRobot4 = true & foRobot5 = true & foRobot6 = true)) &
+
+                    (dfRobot1 = true or dfRobot2 = true or dfRobot3 = true or dfRobot4 = true or dfRobot5 = true or dfRobot6 = true);
+
+            rule12 = (idRobot1 = true or idRobot2 = true or idRobot3 = true or idRobot4 = true or idRobot5 = true or idRobot6 = true ) &
+
+                     ((foRobot1 = true & foRobot2 = true & foRobot3 = true & foRobot4 = true & foRobot5 = true) or 
+                      (foRobot1 = true & foRobot2 = true & foRobot3 = true & foRobot4 = true & foRobot6 = true) or
+                      (foRobot1 = true & foRobot2 = true & foRobot3 = true & foRobot5 = true & foRobot6 = true) or 
+                      (foRobot1 = true & foRobot2 = true & foRobot4 = true & foRobot5 = true & foRobot6 = true) or
+                      (foRobot1 = true & foRobot3 = true & foRobot4 = true & foRobot5 = true & foRobot6 = true) or 
+                      (foRobot2 = true & foRobot3 = true & foRobot4 = true & foRobot5 = true & foRobot6 = true));
+                    
+
         tel
-     enforce (not (currentStClient = 1 & currentStClient2 = 0 & currentStClient3 = 0) or rule1) &
-             (not (currentStClient = 2 & currentStClient2 = 0 & currentStClient3 = 0) or rule2) &
-             (not (currentStClient = 3 & currentStClient2 = 0 & currentStClient3 = 0) or rule3) &
+     enforce (not (currentStClient = 1 & currentStClient2 = 0 & currentStClient3 = 0 & currentStClient4 = 0) or rule1) &
+             (not (currentStClient = 2 & currentStClient2 = 0 & currentStClient3 = 0 & currentStClient4 = 0) or rule2) &
+             (not (currentStClient = 3 & currentStClient2 = 0 & currentStClient3 = 0 & currentStClient4 = 0) or rule3) &
 
-             (not (currentStClient = 1 & currentStClient2 = 1 & currentStClient3 = 0) or rule4) &
-             (not (currentStClient = 2 & currentStClient2 = 2 & currentStClient3 = 0) or rule5) &
-             (not (currentStClient = 3 & currentStClient2 = 3 & currentStClient3 = 0) or rule6) &
+             (not (currentStClient = 1 & currentStClient2 = 1 & currentStClient3 = 0 & currentStClient4 = 0) or rule4) &
+             (not (currentStClient = 2 & currentStClient2 = 2 & currentStClient3 = 0 & currentStClient4 = 0) or rule5) &
+             (not (currentStClient = 3 & currentStClient2 = 3 & currentStClient3 = 0 & currentStClient4 = 0) or rule6) &
 
-             (not (currentStClient = 1 & currentStClient2 = 1 & currentStClient3 = 1) or rule7) &
-             (not (currentStClient = 2 & currentStClient2 = 2 & currentStClient3 = 2) or rule8) &
-             (not (currentStClient = 3 & currentStClient2 = 3 & currentStClient3 = 3) or rule9)
+             (not (currentStClient = 1 & currentStClient2 = 1 & currentStClient3 = 1 & currentStClient4 = 0) or rule7) &
+             (not (currentStClient = 2 & currentStClient2 = 2 & currentStClient3 = 2 & currentStClient4 = 0) or rule8) &
+             (not (currentStClient = 3 & currentStClient2 = 3 & currentStClient3 = 3 & currentStClient4 = 0) or rule9) &
+
+             (not (currentStClient = 1 & currentStClient2 = 1 & currentStClient3 = 1 & currentStClient4 = 1) or rule10) &
+             (not (currentStClient = 2 & currentStClient2 = 2 & currentStClient3 = 2 & currentStClient4 = 2) or rule11) &
+             (not (currentStClient = 3 & currentStClient2 = 3 & currentStClient3 = 3 & currentStClient4 = 3) or rule12)
+
+
+
+
+
+             (not (currentStClient = 1 & currentStClient2 = 2 & currentStClient3 = 1  & currentStClient4 = 0 ) or rule1) &
+             (not (currentStClient = 1 & currentStClient2 = 2 & currentStClient3 = 1  & currentStClient4 = 1 ) or rule1) &
+             (not (currentStClient = 1 & currentStClient2 = 2 & currentStClient3 = 1  & currentStClient4 = 2 ) or rule1) &
+             (not (currentStClient = 1 & currentStClient2 = 2 & currentStClient3 = 1  & currentStClient4 = 3 ) or rule1) &
+
+             (not (currentStClient = 1 & currentStClient2 = 2 & currentStClient3 = 2  & currentStClient4 = 0 ) or rule1) &
+             (not (currentStClient = 1 & currentStClient2 = 2 & currentStClient3 = 2  & currentStClient4 = 1 ) or rule1) &
+             (not (currentStClient = 1 & currentStClient2 = 2 & currentStClient3 = 2  & currentStClient4 = 2 ) or rule1) &
+             (not (currentStClient = 1 & currentStClient2 = 2 & currentStClient3 = 2  & currentStClient4 = 3 ) or rule1) &
+
+             (not (currentStClient = 1 & currentStClient2 = 2 & currentStClient3 = 3  & currentStClient4 = 0 ) or rule1) &
+             (not (currentStClient = 1 & currentStClient2 = 2 & currentStClient3 = 3  & currentStClient4 = 1 ) or rule1) &
+             (not (currentStClient = 1 & currentStClient2 = 2 & currentStClient3 = 3  & currentStClient4 = 2 ) or rule1) &
+             (not (currentStClient = 1 & currentStClient2 = 2 & currentStClient3 = 3  & currentStClient4 = 3 ) or rule1) &
+
+             (not (currentStClient = 1 & currentStClient2 = 3 & currentStClient3 = 1  & currentStClient4 = 0 ) or rule1) &
+             (not (currentStClient = 1 & currentStClient2 = 3 & currentStClient3 = 1  & currentStClient4 = 1 ) or rule1) &
+             (not (currentStClient = 1 & currentStClient2 = 3 & currentStClient3 = 1  & currentStClient4 = 2 ) or rule1) &
+             (not (currentStClient = 1 & currentStClient2 = 3 & currentStClient3 = 1  & currentStClient4 = 3 ) or rule1) &
+
+             (not (currentStClient = 1 & currentStClient2 = 3 & currentStClient3 = 2  & currentStClient4 = 0 ) or rule1) &
+             (not (currentStClient = 1 & currentStClient2 = 3 & currentStClient3 = 2  & currentStClient4 = 1 ) or rule1) &
+             (not (currentStClient = 1 & currentStClient2 = 3 & currentStClient3 = 2  & currentStClient4 = 2 ) or rule1) &
+             (not (currentStClient = 1 & currentStClient2 = 3 & currentStClient3 = 2  & currentStClient4 = 3 ) or rule1) &
+
+             (not (currentStClient = 1 & currentStClient2 = 3 & currentStClient3 = 3  & currentStClient4 = 0 ) or rule1) &
+             (not (currentStClient = 1 & currentStClient2 = 3 & currentStClient3 = 3  & currentStClient4 = 1 ) or rule1) &
+             (not (currentStClient = 1 & currentStClient2 = 3 & currentStClient3 = 3  & currentStClient4 = 2 ) or rule1) &
+             (not (currentStClient = 1 & currentStClient2 = 3 & currentStClient3 = 3  & currentStClient4 = 3 ) or rule1)
+
+
+
+
 
      with(robot1GuestH, robot1FoodO, robot1DeliveringF, c1,
           robot2GuestH, robot2FoodO, robot2DeliveringF, c2,
           robot3GuestH, robot3FoodO, robot3DeliveringF, c3,
           robot4GuestH, robot4FoodO, robot4DeliveringF, c4,
-          robot5GuestH, robot5FoodO, robot5DeliveringF, c5: bool)
+          robot5GuestH, robot5FoodO, robot5DeliveringF, c5,
+          robot6GuestH, robot6FoodO, robot6DeliveringF, c6: bool)
 let
     (idRobot1, ghRobot1, foRobot1, dfRobot1) = inlined robot(robot1GuestH, robot1FoodO, robot1DeliveringF, c1);
     (idRobot2, ghRobot2, foRobot2, dfRobot2) = inlined robot(robot2GuestH, robot2FoodO, robot2DeliveringF, c2);
     (idRobot3, ghRobot3, foRobot3, dfRobot3) = inlined robot(robot3GuestH, robot3FoodO, robot3DeliveringF, c3);
     (idRobot4, ghRobot4, foRobot4, dfRobot4) = inlined robot(robot4GuestH, robot4FoodO, robot4DeliveringF, c4);
     (idRobot5, ghRobot5, foRobot5, dfRobot5) = inlined robot(robot5GuestH, robot5FoodO, robot5DeliveringF, c5);
+    (idRobot6, ghRobot6, foRobot6, dfRobot6) = inlined robot(robot6GuestH, robot6FoodO, robot6DeliveringF, c6);
+
     
     currentStClient = inlined client(clientEndS);
     currentStClient2 = inlined client(clientEndS2);
     currentStClient3 = inlined client(clientEndS3);
+    currentStClient4 = inlined client(clientEndS4);
+
 tel
