@@ -1,30 +1,35 @@
-node client(endS: bool) returns (currentState: int)
+node client(endS: bool) returns (currentState, presenca: int)
 let
     automaton
      state Idle do
      currentState = 0;
+     presenca = 0;
      unless endS then Arriving
 
      state Arriving do
      currentState = 1;
+     presenca = 1;
      unless endS then Ordering
 
      state Ordering do
      currentState = 2;
+     presenca = 1;
      unless endS then Waiting
 
      state Waiting do
      currentState = 3;
+     presenca = 1;
      unless endS then Eating
 
      state Eating do
      currentState = 4;
+     presenca = 1;
      unless endS then Idle
     end
 tel
 
 
-node robot(guestH, foodO, deliveringF, c: bool) returns (id, gh, fo, df: bool)
+node robot(guestH, foodO, deliveringF, c: bool) returns (id, gh, fo, df: bool; inativo: int)
 let
     automaton
      state Idle do
@@ -32,8 +37,9 @@ let
      gh = false;
      fo = false;
      df = false;
+     inativo = 1;
      unless guestH & (not foodO & not deliveringF) then GuestHosting |
-          	foodO & (not guestH & not deliveringF) then FoodOrdering |
+            foodO & (not guestH & not deliveringF) then FoodOrdering |
             deliveringF & (not guestH & not foodO) then DeliveringFood
 
      state GuestHosting do
@@ -41,6 +47,7 @@ let
      gh = true;
      fo = false;
      df = false;
+     inativo = 0;
      unless c then Idle
 
      state FoodOrdering do
@@ -48,6 +55,7 @@ let
      gh = false;
      fo = true;
      df = false;
+     inativo = 0;
      unless c then DeliveringFood
 
      state DeliveringFood do
@@ -55,19 +63,23 @@ let
      gh = false;
      fo = false;
      df = true;
+     inativo = 0;
      unless c then Idle
     end
 tel
 
 node mainNode(clientEndS, clientEndS2, clientEndS3, clientEndS4 : bool) returns (idRobot1, ghRobot1, foRobot1, dfRobot1,
-                                                                   idRobot2, ghRobot2, foRobot2, dfRobot2,
+                                                                   idRobot2, ghRobot2, foRobot2, dfRobot2, 
                                                                    idRobot3, ghRobot3, foRobot3, dfRobot3,
                                                                    idRobot4, ghRobot4, foRobot4, dfRobot4,
                                                                    idRobot5, ghRobot5, foRobot5, dfRobot5,
                                                                    idRobot6, ghRobot6, foRobot6, dfRobot6: bool;
-                                                                   currentStClient, currentStClient2, currentStClient3, currentStClient4: int)
+                                                                   inativoRobot1, inativoRobot2, inativoRobot3, inativoRobot4,
+
+                                                                   currentStClient, presenca1, currentStClient2, presenca2,
+                                                                   currentStClient3, presenca3, currentStClient4, presenca4: int)
 contract
-        var rule1, rule2, rule3, rule4, rule5, rule6, rule7, rule8, rule9, rule10, rule11, rule12: bool; 
+        var rule1 , rule2, rule3, rule4, rule5, rule6, rule7, rule8, rule9, rule10, rule11, rule12: bool; totalGrupos, totalInativos: int;
         let
 
         (*A set of guests Arriving*)
@@ -175,7 +187,6 @@ contract
 
 
             rule11 = (idRobot1 = true or idRobot2 = true or idRobot3 = true or idRobot4 = true or idRobot5 = true or idRobot6 = true ) &
-
                     ((foRobot1 = true & foRobot2 = true & foRobot3 = true & foRobot4 = true) or
                      (foRobot1 = true & foRobot2 = true & foRobot3 = true & foRobot5 = true) or
                      (foRobot1 = true & foRobot2 = true & foRobot3 = true & foRobot6 = true) or
@@ -191,21 +202,23 @@ contract
                      (foRobot2 = true & foRobot3 = true & foRobot5 = true & foRobot6 = true) or
                      (foRobot2 = true & foRobot4 = true & foRobot5 = true & foRobot6 = true) or
                      (foRobot3 = true & foRobot4 = true & foRobot5 = true & foRobot6 = true)) &
-
                     (dfRobot1 = true or dfRobot2 = true or dfRobot3 = true or dfRobot4 = true or dfRobot5 = true or dfRobot6 = true);
 
             rule12 = (idRobot1 = true or idRobot2 = true or idRobot3 = true or idRobot4 = true or idRobot5 = true or idRobot6 = true ) &
-
                      ((foRobot1 = true & foRobot2 = true & foRobot3 = true & foRobot4 = true & foRobot5 = true) or 
                       (foRobot1 = true & foRobot2 = true & foRobot3 = true & foRobot4 = true & foRobot6 = true) or
                       (foRobot1 = true & foRobot2 = true & foRobot3 = true & foRobot5 = true & foRobot6 = true) or 
                       (foRobot1 = true & foRobot2 = true & foRobot4 = true & foRobot5 = true & foRobot6 = true) or
                       (foRobot1 = true & foRobot3 = true & foRobot4 = true & foRobot5 = true & foRobot6 = true) or 
                       (foRobot2 = true & foRobot3 = true & foRobot4 = true & foRobot5 = true & foRobot6 = true));
+
+        totalGrupos = (presenca1 + presenca2 + presenca3 + presenca4 + presenca5 + presenca6)
+        totalInativos = (inativoRobot1 + inativoRobot2 + inativoRobot3 + inativoRobot4 + inativoRobot5 + inativoRobot6)
                     
 
         tel
      enforce (not (currentStClient = 1 & currentStClient2 = 0 & currentStClient3 = 0 & currentStClient4 = 0) or rule1) &
+             (not (totalGrupos = 1) or totalInativos = 6)
              (not (currentStClient = 2 & currentStClient2 = 0 & currentStClient3 = 0 & currentStClient4 = 0) or rule2) &
              (not (currentStClient = 3 & currentStClient2 = 0 & currentStClient3 = 0 & currentStClient4 = 0) or rule3) &
 
@@ -225,7 +238,7 @@ contract
 
 
 
-             (not (currentStClient = 1 & currentStClient2 = 2 & currentStClient3 = 1  & currentStClient4 = 0 ) or rule1) &
+             (* (not (currentStClient = 1 & currentStClient2 = 2 & currentStClient3 = 1  & currentStClient4 = 0 ) or rule1) &
              (not (currentStClient = 1 & currentStClient2 = 2 & currentStClient3 = 1  & currentStClient4 = 1 ) or rule1) &
              (not (currentStClient = 1 & currentStClient2 = 2 & currentStClient3 = 1  & currentStClient4 = 2 ) or rule1) &
              (not (currentStClient = 1 & currentStClient2 = 2 & currentStClient3 = 1  & currentStClient4 = 3 ) or rule1) &
@@ -253,7 +266,7 @@ contract
              (not (currentStClient = 1 & currentStClient2 = 3 & currentStClient3 = 3  & currentStClient4 = 0 ) or rule1) &
              (not (currentStClient = 1 & currentStClient2 = 3 & currentStClient3 = 3  & currentStClient4 = 1 ) or rule1) &
              (not (currentStClient = 1 & currentStClient2 = 3 & currentStClient3 = 3  & currentStClient4 = 2 ) or rule1) &
-             (not (currentStClient = 1 & currentStClient2 = 3 & currentStClient3 = 3  & currentStClient4 = 3 ) or rule1)
+             (not (currentStClient = 1 & currentStClient2 = 3 & currentStClient3 = 3  & currentStClient4 = 3 ) or rule1) *)
 
 
 
@@ -266,17 +279,17 @@ contract
           robot5GuestH, robot5FoodO, robot5DeliveringF, c5,
           robot6GuestH, robot6FoodO, robot6DeliveringF, c6: bool)
 let
-    (idRobot1, ghRobot1, foRobot1, dfRobot1) = inlined robot(robot1GuestH, robot1FoodO, robot1DeliveringF, c1);
-    (idRobot2, ghRobot2, foRobot2, dfRobot2) = inlined robot(robot2GuestH, robot2FoodO, robot2DeliveringF, c2);
-    (idRobot3, ghRobot3, foRobot3, dfRobot3) = inlined robot(robot3GuestH, robot3FoodO, robot3DeliveringF, c3);
-    (idRobot4, ghRobot4, foRobot4, dfRobot4) = inlined robot(robot4GuestH, robot4FoodO, robot4DeliveringF, c4);
-    (idRobot5, ghRobot5, foRobot5, dfRobot5) = inlined robot(robot5GuestH, robot5FoodO, robot5DeliveringF, c5);
-    (idRobot6, ghRobot6, foRobot6, dfRobot6) = inlined robot(robot6GuestH, robot6FoodO, robot6DeliveringF, c6);
+    (idRobot1, ghRobot1, foRobot1, dfRobot1, inativoRobot1) = inlined robot(robot1GuestH, robot1FoodO, robot1DeliveringF, c1);
+    (idRobot2, ghRobot2, foRobot2, dfRobot2, inativoRobot2) = inlined robot(robot2GuestH, robot2FoodO, robot2DeliveringF, c2);
+    (idRobot3, ghRobot3, foRobot3, dfRobot3, inativoRobot3) = inlined robot(robot3GuestH, robot3FoodO, robot3DeliveringF, c3);
+    (idRobot4, ghRobot4, foRobot4, dfRobot4, inativoRobot4) = inlined robot(robot4GuestH, robot4FoodO, robot4DeliveringF, c4);
+    (idRobot5, ghRobot5, foRobot5, dfRobot5, inativoRobot5) = inlined robot(robot5GuestH, robot5FoodO, robot5DeliveringF, c5);
+    (idRobot6, ghRobot6, foRobot6, dfRobot6, inativoRobot6) = inlined robot(robot6GuestH, robot6FoodO, robot6DeliveringF, c6);
 
     
-    currentStClient = inlined client(clientEndS);
-    currentStClient2 = inlined client(clientEndS2);
-    currentStClient3 = inlined client(clientEndS3);
-    currentStClient4 = inlined client(clientEndS4);
+    (currentStClient, presenca1) = inlined client(clientEndS);
+    (currentStClient2, presenca2) = inlined client(clientEndS2);
+    (currentStClient3, presenca3) = inlined client(clientEndS3);
+    (currentStClient4, presenca4) = inlined client(clientEndS4);
 
 tel
