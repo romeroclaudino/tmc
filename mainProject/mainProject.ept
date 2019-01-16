@@ -19,12 +19,13 @@ let
      state Waiting do
      currentState = 3;
      presenca = 1;
-     unless endS then Eating
+     unless endS then Idle
+     (* unless endS then Eating *)
 
-     state Eating do
+     (* state Eating do
      currentState = 4;
      presenca = 1;
-     unless endS then Idle
+     unless endS then Idle *)
     end
 tel
 
@@ -79,30 +80,32 @@ node mainNode(clientEndS, clientEndS2, clientEndS3, clientEndS4 : bool) returns 
                                                                    currentStClient, presenca1, currentStClient2, presenca2,
                                                                    currentStClient3, presenca3, currentStClient4, presenca4: int)
 contract
-        var rule1 , rule2, rule3, rule4, rule5, rule6, rule7, rule8, rule9, rule10, rule11, rule12: bool; totalGrupos, totalInativos: int;
+        var umGpChega, umGpPede, umGpEspera, doisGpChegam, doisGpPedem, doisGpEsperam,
+            tresGpChegam, tresGpPedem, tresGpEsperam, quatroGpChegam, quatroGpPedem, quatroGpEsperam: bool;
+            totalGrupos, totalInativos: int;
         let
 
         (*A set of guests Arriving*)
-            (* rule1 = (ghRobot1 = true or foRobot2 = true or dfRobot3 = true); *)
-            rule1 = (ghRobot1 = true or ghRobot2 = true or ghRobot3 = true) &
+            (* umGpChega = (ghRobot1 = true or foRobot2 = true or dfRobot3 = true); *)
+            umGpChega = (ghRobot1 = true or ghRobot2 = true or ghRobot3 = true) &
                     (foRobot1 = true or foRobot2 = true or foRobot3 = true) &
                     (dfRobot1 = true or dfRobot2 = true or dfRobot3 = true);
 
         (*A set of guests Ordering*)
-            (* rule2 = (idRobot1 = true & foRobot2 = true & dfRobot3 = true); *)
-            rule2 = (idRobot1 = true or idRobot2 = true or idRobot3 = true) &
+            (* umGpPede = (idRobot1 = true & foRobot2 = true & dfRobot3 = true); *)
+            umGpPede = (idRobot1 = true or idRobot2 = true or idRobot3 = true) &
                     (foRobot1 = true or foRobot2 = true or foRobot3 = true) &
                     (dfRobot1 = true or dfRobot2 = true or dfRobot3 = true);
 
         (*A set of guests Waiting*)
-            (* rule3 = (idRobot1 = true & dfRobot2 = true & dfRobot3 = true); *)
-            rule3 = (idRobot1 = true or idRobot2 = true or idRobot3 = true) &
+            (* umGpEspera = (idRobot1 = true & dfRobot2 = true & dfRobot3 = true); *)
+            umGpEspera = (idRobot1 = true or idRobot2 = true or idRobot3 = true) &
                     ((dfRobot1 = true & dfRobot2 = true) or
                      (dfRobot2 = true & dfRobot3 = true) or
                      (dfRobot1 = true & dfRobot3 = true));
 
         (*Two sets of guests Arriving*)
-            rule4 = (ghRobot1 = true or ghRobot2 = true or ghRobot3 = true or ghRobot4 = true) &
+            doisGpChegam = (ghRobot1 = true or ghRobot2 = true or ghRobot3 = true or ghRobot4 = true) &
                     ((foRobot1 = true & foRobot2 = true) or
                      (foRobot1 = true & foRobot3 = true) or
                      (foRobot1 = true & foRobot4 = true) or
@@ -112,7 +115,7 @@ contract
                     (dfRobot1 = true or dfRobot2 = true or dfRobot3 = true or dfRobot4 = true);
 
         (*Two sets of guests Ordering*)
-            rule5 = (idRobot1 = true or idRobot2 = true or idRobot3 = true or idRobot4 = true) &
+            doisGpPedem = (idRobot1 = true or idRobot2 = true or idRobot3 = true or idRobot4 = true) &
                     ((foRobot1 = true & foRobot2 = true) or
                      (foRobot1 = true & foRobot3 = true) or
                      (foRobot1 = true & foRobot4 = true) or
@@ -122,14 +125,14 @@ contract
                     (dfRobot1 = true or dfRobot2 = true or dfRobot3 = true or dfRobot4 = true);
 
         (*Two sets of guests Waiting*)
-            rule6 = (idRobot1 = true or idRobot2 = true or idRobot3 = true or idRobot4 = true) &
+            doisGpEsperam = (idRobot1 = true or idRobot2 = true or idRobot3 = true or idRobot4 = true) &
                     ((dfRobot1 = true & dfRobot2 = true & dfRobot3 = true) or
                      (dfRobot1 = true & dfRobot2 = true & dfRobot4 = true) or
                      (dfRobot1 = true & dfRobot3 = true & dfRobot4 = true) or
                      (dfRobot2 = true & dfRobot3 = true & dfRobot4 = true));
 
         (*Three sets of guests Arriving*)
-            rule7 = (ghRobot1 = true or ghRobot2 = true or ghRobot3 = true or ghRobot4 = true or ghRobot5 = true) &
+            tresGpChegam = (ghRobot1 = true or ghRobot2 = true or ghRobot3 = true or ghRobot4 = true or ghRobot5 = true) &
                     ((foRobot1 = true & foRobot2 = true & foRobot3 = true) or
                      (foRobot1 = true & foRobot2 = true & foRobot4 = true) or
                      (foRobot1 = true & foRobot3 = true & foRobot4 = true) or
@@ -143,7 +146,7 @@ contract
                     (dfRobot1 = true or dfRobot2 = true or dfRobot3 = true or dfRobot4 = true or dfRobot5 = true);
 
         (*Three sets of guests Ordering*)
-            rule8 = (idRobot1 = true or idRobot2 = true or idRobot3 = true or idRobot4 = true or idRobot5 = true) &
+            tresGpPedem = (idRobot1 = true or idRobot2 = true or idRobot3 = true or idRobot4 = true or idRobot5 = true) &
                     ((foRobot1 = true & foRobot2 = true & foRobot3 = true) or
                      (foRobot1 = true & foRobot2 = true & foRobot4 = true) or
                      (foRobot1 = true & foRobot3 = true & foRobot4 = true) or
@@ -157,14 +160,14 @@ contract
                     (dfRobot1 = true or dfRobot2 = true or dfRobot3 = true or dfRobot4 = true or dfRobot5 = true);
 
         (*Three sets of guests Waiting*)
-            rule9 = (idRobot1 = true or idRobot2 = true or idRobot3 = true or idRobot4 = true or idRobot5 = true) &
+            tresGpEsperam = (idRobot1 = true or idRobot2 = true or idRobot3 = true or idRobot4 = true or idRobot5 = true) &
                     ((dfRobot1 = true & dfRobot2 = true & dfRobot3 = true & dfRobot4 = true) or
                      (dfRobot1 = true & dfRobot2 = true & dfRobot3 = true & dfRobot5 = true) or
                      (dfRobot1 = true & dfRobot2 = true & dfRobot4 = true & dfRobot5 = true) or
                      (dfRobot1 = true & dfRobot3 = true & dfRobot4 = true & dfRobot5 = true) or
                      (dfRobot2 = true & dfRobot3 = true & dfRobot4 = true & dfRobot5 = true));
 
-            rule10 = (ghRobot1 = true or ghRobot2 = true or ghRobot3 = true or ghRobot4 = true or ghRobot5 = true or ghRobot6 = true ) &
+            quatroGpChegam = (ghRobot1 = true or ghRobot2 = true or ghRobot3 = true or ghRobot4 = true or ghRobot5 = true or ghRobot6 = true ) &
 
                     ((foRobot1 = true & foRobot2 = true & foRobot3 = true & foRobot4 = true) or
                      (foRobot1 = true & foRobot2 = true & foRobot3 = true & foRobot5 = true) or
@@ -186,7 +189,7 @@ contract
 
 
 
-            rule11 = (idRobot1 = true or idRobot2 = true or idRobot3 = true or idRobot4 = true or idRobot5 = true or idRobot6 = true ) &
+            quatroGpPedem = (idRobot1 = true or idRobot2 = true or idRobot3 = true or idRobot4 = true or idRobot5 = true or idRobot6 = true ) &
                     ((foRobot1 = true & foRobot2 = true & foRobot3 = true & foRobot4 = true) or
                      (foRobot1 = true & foRobot2 = true & foRobot3 = true & foRobot5 = true) or
                      (foRobot1 = true & foRobot2 = true & foRobot3 = true & foRobot6 = true) or
@@ -204,7 +207,7 @@ contract
                      (foRobot3 = true & foRobot4 = true & foRobot5 = true & foRobot6 = true)) &
                     (dfRobot1 = true or dfRobot2 = true or dfRobot3 = true or dfRobot4 = true or dfRobot5 = true or dfRobot6 = true);
 
-            rule12 = (idRobot1 = true or idRobot2 = true or idRobot3 = true or idRobot4 = true or idRobot5 = true or idRobot6 = true ) &
+            quatroGpEsperam = (idRobot1 = true or idRobot2 = true or idRobot3 = true or idRobot4 = true or idRobot5 = true or idRobot6 = true ) &
                      ((foRobot1 = true & foRobot2 = true & foRobot3 = true & foRobot4 = true & foRobot5 = true) or 
                       (foRobot1 = true & foRobot2 = true & foRobot3 = true & foRobot4 = true & foRobot6 = true) or
                       (foRobot1 = true & foRobot2 = true & foRobot3 = true & foRobot5 = true & foRobot6 = true) or 
@@ -213,29 +216,26 @@ contract
                       (foRobot2 = true & foRobot3 = true & foRobot4 = true & foRobot5 = true & foRobot6 = true));
 
         totalGrupos = (presenca1 + presenca2 + presenca3 + presenca4 + presenca5 + presenca6)
+        somaEstados = (currentStClient + currentStClient2 + currentStClient3 + currentStClient4)
         totalInativos = (inativoRobot1 + inativoRobot2 + inativoRobot3 + inativoRobot4 + inativoRobot5 + inativoRobot6)
                     
 
         tel
-     enforce (not (currentStClient = 1 & currentStClient2 = 0 & currentStClient3 = 0 & currentStClient4 = 0) or rule1) &
-             (not (totalGrupos = 1) or totalInativos = 6)
-             (not (currentStClient = 2 & currentStClient2 = 0 & currentStClient3 = 0 & currentStClient4 = 0) or rule2) &
-             (not (currentStClient = 3 & currentStClient2 = 0 & currentStClient3 = 0 & currentStClient4 = 0) or rule3) &
+     enforce (not (currentStClient = 1 & currentStClient2 = 0 & currentStClient3 = 0 & currentStClient4 = 0) or umGpChega) &
+             (not (currentStClient = 2 & currentStClient2 = 0 & currentStClient3 = 0 & currentStClient4 = 0) or umGpPede) &
+             (not (currentStClient = 3 & currentStClient2 = 0 & currentStClient3 = 0 & currentStClient4 = 0) or umGpEspera) &
 
-             (not (currentStClient = 1 & currentStClient2 = 1 & currentStClient3 = 0 & currentStClient4 = 0) or rule4) &
-             (not (currentStClient = 2 & currentStClient2 = 2 & currentStClient3 = 0 & currentStClient4 = 0) or rule5) &
-             (not (currentStClient = 3 & currentStClient2 = 3 & currentStClient3 = 0 & currentStClient4 = 0) or rule6) &
+             (not (currentStClient = 1 & currentStClient2 = 1 & currentStClient3 = 0 & currentStClient4 = 0) or doisGpChegam) &
+             (not (currentStClient = 2 & currentStClient2 = 2 & currentStClient3 = 0 & currentStClient4 = 0) or doisGpPedem) &
+             (not (currentStClient = 3 & currentStClient2 = 3 & currentStClient3 = 0 & currentStClient4 = 0) or doisGpEsperam) &
 
-             (not (currentStClient = 1 & currentStClient2 = 1 & currentStClient3 = 1 & currentStClient4 = 0) or rule7) &
-             (not (currentStClient = 2 & currentStClient2 = 2 & currentStClient3 = 2 & currentStClient4 = 0) or rule8) &
-             (not (currentStClient = 3 & currentStClient2 = 3 & currentStClient3 = 3 & currentStClient4 = 0) or rule9) &
+             (not (currentStClient = 1 & currentStClient2 = 1 & currentStClient3 = 1 & currentStClient4 = 0) or tresGpChegam) &
+             (not (currentStClient = 2 & currentStClient2 = 2 & currentStClient3 = 2 & currentStClient4 = 0) or tresGpPedem) &
+             (not (currentStClient = 3 & currentStClient2 = 3 & currentStClient3 = 3 & currentStClient4 = 0) or tresGpEsperam) &
 
-             (not (currentStClient = 1 & currentStClient2 = 1 & currentStClient3 = 1 & currentStClient4 = 1) or rule10) &
-             (not (currentStClient = 2 & currentStClient2 = 2 & currentStClient3 = 2 & currentStClient4 = 2) or rule11) &
-             (not (currentStClient = 3 & currentStClient2 = 3 & currentStClient3 = 3 & currentStClient4 = 3) or rule12)
-
-
-
+             (not (currentStClient = 1 & currentStClient2 = 1 & currentStClient3 = 1 & currentStClient4 = 1) or quatroGpChegam) &
+             (not (currentStClient = 2 & currentStClient2 = 2 & currentStClient3 = 2 & currentStClient4 = 2) or quatroGpPedem) &
+             (not (currentStClient = 3 & currentStClient2 = 3 & currentStClient3 = 3 & currentStClient4 = 3) or quatroGpEsperam)
 
 
              (* (not (currentStClient = 1 & currentStClient2 = 2 & currentStClient3 = 1  & currentStClient4 = 0 ) or rule1) &
