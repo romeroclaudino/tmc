@@ -206,139 +206,133 @@ contract
         totalGrupos = (presence1 + presence2 + presence3 + presence4);
         somaEstados = (currentStClient + currentStClient2 + currentStClient3 + currentStClient4)
 
-
         tel
      enforce (not (totalGrupos = 1 & (currentStClient = 1 or currentStClient2 = 1 or currentStClient3 = 1 or currentStClient4 = 1)) or umGpChega) &
              (not (totalGrupos = 1 & (currentStClient = 2 or currentStClient2 = 2 or currentStClient3 = 2 or currentStClient4 = 2)) or umGpPede) &
              (not (totalGrupos = 1 & (currentStClient = 3 or currentStClient2 = 3 or currentStClient3 = 3 or currentStClient4 = 3)) or umGpEspera) &
              (not (totalGrupos = 2 & somaEstados = 2) or doisGpChegam) &
+
              (*(not (totalGrupos = 2 & somaEstados = 3) or COMPLETAR) &*)
-             (not (totalGrupos = 2 & somaEstados = 4) & (
-                                                        (currentStClient = 2 & currentStClient2 = 2) or
+
+             (not (totalGrupos = 2 & somaEstados = 4 & ((currentStClient = 2 & currentStClient2 = 2) or
                                                         (currentStClient = 2 & currentStClient3 = 2) or
                                                         (currentStClient = 2 & currentStClient4 = 2) or
                                                         (currentStClient2 = 2 & currentStClient3 = 2) or
                                                         (currentStClient2 = 2 & currentStClient4 = 2) or
                                                         (currentStClient3 = 2 & currentStClient4 = 2)
-                                                        ) or doisGpPedem) &
+                                                        )) or doisGpPedem) &
 
-(*              (not (totalGrupos = 2 & somaEstados = 4) & ((currentStClient = 1 & currentStClient2 = 3) or
-                                                        (currentStClient = 1 & currentStClient3 = 3) or
-                                                        (currentStClient = 1 & currentStClient4 = 3) or
+(*              (not (totalGrupos = 2 & somaEstados = 4 & (
+                                                            (currentStClient = 1 & currentStClient2 = 3) or
+                                                            (currentStClient = 1 & currentStClient3 = 3) or
+                                                            (currentStClient = 1 & currentStClient4 = 3) or
 
-                                                        (currentStClient2 = 1 & currentStClient = 3) or
-                                                        (currentStClient2 = 1 & currentStClient3 = 3) or
-                                                        (currentStClient2 = 1 & currentStClient4 = 3) or
+                                                            (currentStClient2 = 1 & currentStClient = 3) or
+                                                            (currentStClient2 = 1 & currentStClient3 = 3) or
+                                                            (currentStClient2 = 1 & currentStClient4 = 3) or
 
-                                                        (currentStClient3 = 1 & currentStClient = 3) or
-                                                        (currentStClient3 = 1 & currentStClient2 = 3) or
-                                                        (currentStClient3 = 1 & currentStClient4 = 3) or
+                                                            (currentStClient3 = 1 & currentStClient = 3) or
+                                                            (currentStClient3 = 1 & currentStClient2 = 3) or
+                                                            (currentStClient3 = 1 & currentStClient4 = 3) or
 
-                                                        (currentStClient4 = 1 & currentStClient = 3) or
-                                                        (currentStClient4 = 1 & currentStClient2 = 3) or
-                                                        (currentStClient4 = 1 & currentStClient3 = 3)
-                                                        ) or COMPLETAR) & *)
+                                                            (currentStClient4 = 1 & currentStClient = 3) or
+                                                            (currentStClient4 = 1 & currentStClient2 = 3) or
+                                                            (currentStClient4 = 1 & currentStClient3 = 3)
+                                                            )) or COMPLETAR) & *)
              (*(not (totalGrupos = 2 & somaEstados = 5) or COMPLETAR) &*)
+
              (not (totalGrupos = 2 & somaEstados = 6) or doisGpEsperam) &
 
-
-             
-
              (not (totalGrupos = 3 & somaEstados = 3) or tresGpChegam) &
+
             (*(not (totalGrupos = 3 & somaEstados = 4) or COMPLETAR) &*)
-            (*(not (totalGrupos = 3 & somaEstados = 5) & (
-                                                        (currentStClient = 2 & currentStClient2 = 2 & currentStClient3 = 1) or
-                                                        (currentStClient = 2 & currentStClient2 = 2 & currentStClient4 = 1) or
-                                                        (currentStClient = 2 & currentStClient3 = 2 & currentStClient4 = 1) or
-                                                        (currentStClient2 = 2 & currentStClient3 = 2 & currentStClient4 = 1) or 
+            
+            (*(not (totalGrupos = 3 & somaEstados = 5 & ((currentStClient = 2 & currentStClient2 = 2 & currentStClient3 = 1) or
+                                                         (currentStClient = 2 & currentStClient2 = 2 & currentStClient4 = 1) or
+                                                         (currentStClient = 2 & currentStClient3 = 2 & currentStClient4 = 1) or
+                                                         (currentStClient2 = 2 & currentStClient3 = 2 & currentStClient4 = 1) or   
 
-                                                        (currentStClient = 2 & currentStClient2 = 1 & currentStClient3 = 2) or
-                                                        (currentStClient = 2 & currentStClient2 = 1 & currentStClient4 = 2) or
-                                                        (currentStClient = 2 & currentStClient3 = 1 & currentStClient4 = 2) or
-                                                        (currentStClient2 = 2 & currentStClient3 = 1 & currentStClient4 = 2) or
+                                                         (currentStClient = 2 & currentStClient2 = 1 & currentStClient3 = 2) or
+                                                         (currentStClient = 2 & currentStClient2 = 1 & currentStClient4 = 2) or
+                                                         (currentStClient = 2 & currentStClient3 = 1 & currentStClient4 = 2) or
+                                                         (currentStClient2 = 2 & currentStClient3 = 1 & currentStClient4 = 2) or  
 
-                                                        (currentStClient = 1 & currentStClient2 = 2 & currentStClient3 = 2) or
-                                                        (currentStClient = 1 & currentStClient2 = 2 & currentStClient4 = 2) or
-                                                        (currentStClient = 1 & currentStClient3 = 2 & currentStClient4 = 2) or
-                                                        (currentStClient2 = 1 & currentStClient3 = 2 & currentStClient4 = 2) or
+                                                         (currentStClient = 1 & currentStClient2 = 2 & currentStClient3 = 2) or
+                                                         (currentStClient = 1 & currentStClient2 = 2 & currentStClient4 = 2) or
+                                                         (currentStClient = 1 & currentStClient3 = 2 & currentStClient4 = 2) or
+                                                         (currentStClient2 = 1 & currentStClient3 = 2 & currentStClient4 = 2)
+                                                         )) or COMPLETAR) &*)
 
-                                                        (currentStClient = 1 & currentStClient2 = 1 & currentStClient3 = 3) or
-                                                        (currentStClient = 1 & currentStClient2 = 1 & currentStClient4 = 3) or
-                                                        (currentStClient = 1 & currentStClient3 = 1 & currentStClient4 = 3) or
-                                                        (currentStClient2 = 1 & currentStClient3 = 1 & currentStClient4 = 3) or 
+           (*(not (totalGrupos = 3 & somaEstados = 5 & ((currentStClient = 1 & currentStClient2 = 1 & currentStClient3 = 3) or
+                                                      (currentStClient = 1 & currentStClient2 = 1 & currentStClient4 = 3) or
+                                                      (currentStClient = 1 & currentStClient3 = 1 & currentStClient4 = 3) or
+                                                      (currentStClient2 = 1 & currentStClient3 = 1 & currentStClient4 = 3) or 
 
-                                                        (currentStClient = 1 & currentStClient2 = 3 & currentStClient3 = 1) or
-                                                        (currentStClient = 1 & currentStClient2 = 3 & currentStClient4 = 1) or
-                                                        (currentStClient = 1 & currentStClient3 = 3 & currentStClient4 = 1) or
-                                                        (currentStClient2 = 1 & currentStClient3 = 3 & currentStClient4 = 1) or 
+                                                      (currentStClient = 1 & currentStClient2 = 3 & currentStClient3 = 1) or
+                                                      (currentStClient = 1 & currentStClient2 = 3 & currentStClient4 = 1) or
+                                                      (currentStClient = 1 & currentStClient3 = 3 & currentStClient4 = 1) or
+                                                      (currentStClient2 = 1 & currentStClient3 = 3 & currentStClient4 = 1) or 
 
-                                                        (currentStClient = 3 & currentStClient2 = 1 & currentStClient3 = 1) or
-                                                        (currentStClient = 3 & currentStClient2 = 1 & currentStClient4 = 1) or
-                                                        (currentStClient = 3 & currentStClient3 = 1 & currentStClient4 = 1) or
-                                                        (currentStClient2 = 3 & currentStClient3 = 1 & currentStClient4 = 1) 
+                                                      (currentStClient = 3 & currentStClient2 = 1 & currentStClient3 = 1) or
+                                                      (currentStClient = 3 & currentStClient2 = 1 & currentStClient4 = 1) or
+                                                      (currentStClient = 3 & currentStClient3 = 1 & currentStClient4 = 1) or
+                                                      (currentStClient2 = 3 & currentStClient3 = 1 & currentStClient4 = 1) 
+                                                      )) or COMPLETAR) &*)
 
-                                                        ) or COMPLETAR) &*)
-             (not (totalGrupos = 3 & somaEstados = 6) & (
-                                                        (currentStClient = 2 & currentStClient2 = 2 & currentStClient3 = 2) or
+             (not (totalGrupos = 3 & somaEstados = 6 & ((currentStClient = 2 & currentStClient2 = 2 & currentStClient3 = 2) or
                                                         (currentStClient = 2 & currentStClient2 = 2 & currentStClient4 = 2) or
                                                         (currentStClient = 2 & currentStClient3 = 2 & currentStClient4 = 2) or
                                                         (currentStClient2 = 2 & currentStClient3 = 2 & currentStClient4 = 2)                                         
-                                                        ) or tresGpPedem) & 
-(*              (not (totalGrupos = 3 & somaEstados = 6) & (
-                                                        (currentStClient = 1 & currentStClient2 = 2 & currentStClient3 = 3) or
-                                                        (currentStClient = 1 & currentStClient2 = 2 & currentStClient4 = 3) or
-                                                        (currentStClient = 1 & currentStClient3 = 2 & currentStClient4 = 3) or
-                                                        (currentStClient2 = 1 & currentStClient3 = 2 & currentStClient4 = 3) or
+                                                        )) or tresGpPedem) & 
+
+(*             (not (totalGrupos = 3 & somaEstados = 6 & ((currentStClient = 1 & currentStClient2 = 2 & currentStClient3 = 3) or
+                                                          (currentStClient = 1 & currentStClient2 = 2 & currentStClient4 = 3) or
+                                                          (currentStClient = 1 & currentStClient3 = 2 & currentStClient4 = 3) or
+                                                          (currentStClient2 = 1 & currentStClient3 = 2 & currentStClient4 = 3) or
+                                                         
+                                                          (currentStClient = 1 & currentStClient2 = 3 & currentStClient3 = 2) or
+                                                          (currentStClient = 1 & currentStClient2 = 3 & currentStClient4 = 2) or
+                                                          (currentStClient = 1 & currentStClient3 = 3 & currentStClient4 = 2) or
+                                                          (currentStClient2 = 1 & currentStClient3 = 3 & currentStClient4 =2) or
                                                         
-                                                        (currentStClient = 1 & currentStClient2 = 3 & currentStClient3 = 2) or
-                                                        (currentStClient = 1 & currentStClient2 = 3 & currentStClient4 = 2) or
-                                                        (currentStClient = 1 & currentStClient3 = 3 & currentStClient4 = 2) or
-                                                        (currentStClient2 = 1 & currentStClient3 = 3 & currentStClient4 =2) or
-                                                        
-                                                        (currentStClient = 2 & currentStClient2 = 3 & currentStClient3 = 1) or
-                                                        (currentStClient = 2 & currentStClient2 = 3 & currentStClient4 = 1) or
-                                                        (currentStClient = 2 & currentStClient3 = 3 & currentStClient4 = 1) or
-                                                        (currentStClient2 = 2 & currentStClient3 = 3 & currentStClient4 = 1) or
+                                                          (currentStClient = 2 & currentStClient2 = 3 & currentStClient3 = 1) or
+                                                          (currentStClient = 2 & currentStClient2 = 3 & currentStClient4 = 1) or
+                                                          (currentStClient = 2 & currentStClient3 = 3 & currentStClient4 = 1) or
+                                                          (currentStClient2 = 2 & currentStClient3 = 3 & currentStClient4 = 1) or
 
-                                                        (currentStClient = 2 & currentStClient2 = 1 & currentStClient3 = 3) or
-                                                        (currentStClient = 2 & currentStClient2 = 1 & currentStClient4 = 3) or
-                                                        (currentStClient = 2 & currentStClient3 = 1 & currentStClient4 = 3) or
-                                                        (currentStClient2 = 2 & currentStClient3 = 1 & currentStClient4 = 3) or
+                                                          (currentStClient = 2 & currentStClient2 = 1 & currentStClient3 = 3) or
+                                                          (currentStClient = 2 & currentStClient2 = 1 & currentStClient4 = 3) or
+                                                          (currentStClient = 2 & currentStClient3 = 1 & currentStClient4 = 3) or
+                                                          (currentStClient2 = 2 & currentStClient3 = 1 & currentStClient4 = 3) or
 
+                                                          (currentStClient = 3 & currentStClient2 = 2 & currentStClient3 = 1) or
+                                                          (currentStClient = 3 & currentStClient2 = 2 & currentStClient4 = 1) or
+                                                          (currentStClient = 3 & currentStClient3 = 2 & currentStClient4 = 1) or
+                                                          (currentStClient2 = 3 & currentStClient3 = 2 & currentStClient4 = 1) or
 
-                                                        (currentStClient = 3 & currentStClient2 = 2 & currentStClient3 = 1) or
-                                                        (currentStClient = 3 & currentStClient2 = 2 & currentStClient4 = 1) or
-                                                        (currentStClient = 3 & currentStClient3 = 2 & currentStClient4 = 1) or
-                                                        (currentStClient2 = 3 & currentStClient3 = 2 & currentStClient4 = 1) or
+                                                          (currentStClient = 3 & currentStClient2 = 1 & currentStClient3 = 2) or
+                                                          (currentStClient = 3 & currentStClient2 = 1 & currentStClient4 = 2) or
+                                                          (currentStClient = 3 & currentStClient3 = 1 & currentStClient4 = 2) or
+                                                          (currentStClient2 = 3 & currentStClient3 = 1 & currentStClient4 = 2)
+                                                          )) or COMPLETAR) & *)
 
+            (*(not (totalGrupos = 3 & somaEstados = 7 & ((currentStClient = 2 & currentStClient2 = 2 & currentStClient3 = 3) or
+                                                         (currentStClient = 2 & currentStClient2 = 2 & currentStClient4 = 3) or
+                                                         (currentStClient = 2 & currentStClient3 = 2 & currentStClient4 = 3) or
+                                                         (currentStClient2 = 2 & currentStClient3 = 2 & currentStClient4 = 3) or 
 
-                                                        (currentStClient = 3 & currentStClient2 = 1 & currentStClient3 = 2) or
-                                                        (currentStClient = 3 & currentStClient2 = 1 & currentStClient4 = 2) or
-                                                        (currentStClient = 3 & currentStClient3 = 1 & currentStClient4 = 2) or
-                                                        (currentStClient2 = 3 & currentStClient3 = 1 & currentStClient4 = 2)
-                                                        ) or COMPLETAR) & *)
-            (*(not (totalGrupos = 3 & somaEstados = 7)  & (
-                                                        (currentStClient = 2 & currentStClient2 = 2 & currentStClient3 = 3) or
-                                                        (currentStClient = 2 & currentStClient2 = 2 & currentStClient4 = 3) or
-                                                        (currentStClient = 2 & currentStClient3 = 2 & currentStClient4 = 3) or
-                                                        (currentStClient2 = 2 & currentStClient3 = 2 & currentStClient4 = 3) or 
+                                                         (currentStClient = 2 & currentStClient2 = 3 & currentStClient3 = 2) or
+                                                         (currentStClient = 2 & currentStClient2 = 3 & currentStClient4 = 2) or
+                                                         (currentStClient = 2 & currentStClient3 = 3 & currentStClient4 = 2) or
+                                                         (currentStClient2 = 2 & currentStClient3 = 3 & currentStClient4 = 2) or
 
-                                                        (currentStClient = 2 & currentStClient2 = 3 & currentStClient3 = 2) or
-                                                        (currentStClient = 2 & currentStClient2 = 3 & currentStClient4 = 2) or
-                                                        (currentStClient = 2 & currentStClient3 = 3 & currentStClient4 = 2) or
-                                                        (currentStClient2 = 2 & currentStClient3 = 3 & currentStClient4 = 2) or
+                                                         (currentStClient = 3 & currentStClient2 = 2 & currentStClient3 = 2) or
+                                                         (currentStClient = 3 & currentStClient2 = 2 & currentStClient4 = 2) or
+                                                         (currentStClient = 3 & currentStClient3 = 2 & currentStClient4 = 2) or
+                                                         (currentStClient2 = 3 & currentStClient3 = 2 & currentStClient4 = 2)
+                                                         )) or COMPLETAR) &*)
 
-                                                        (currentStClient = 3 & currentStClient2 = 2 & currentStClient3 = 2) or
-                                                        (currentStClient = 3 & currentStClient2 = 2 & currentStClient4 = 2) or
-                                                        (currentStClient = 3 & currentStClient3 = 2 & currentStClient4 = 2) or
-                                                        (currentStClient2 = 3 & currentStClient3 = 2 & currentStClient4 = 2) or
-
-
-
-
-
-
-                                                        (currentStClient = 3 & currentStClient2 = 3 & currentStClient3 = 1) or
+            (*(not (totalGrupos = 3 & somaEstados = 7 & ((currentStClient = 3 & currentStClient2 = 3 & currentStClient3 = 1) or
                                                         (currentStClient = 3 & currentStClient2 = 3 & currentStClient4 = 1) or
                                                         (currentStClient = 3 & currentStClient3 = 3 & currentStClient4 = 1) or
                                                         (currentStClient2 = 3 & currentStClient3 = 3 & currentStClient4 = 1) or 
@@ -352,166 +346,130 @@ contract
                                                         (currentStClient = 1 & currentStClient2 = 3 & currentStClient4 = 3) or
                                                         (currentStClient = 1 & currentStClient3 = 3 & currentStClient4 = 3) or
                                                         (currentStClient2 = 1 & currentStClient3 = 3 & currentStClient4 = 3) 
+                                                        )) or COMPLETAR) &*)
 
-                                                        ) or COMPLETAR) &*)
             (*(not (totalGrupos = 3 & somaEstados = 8) or COMPLETAR) &*)
+
             (not (totalGrupos = 3 & somaEstados = 9) or tresGpEsperam) &
 
             (not (totalGrupos = 4 & somaEstados = 4) or quatroGpChegam) &
-            (*(not (totalGrupos = 4 & somaEstados = 5) or COMPLETAR) &*)            
-            (*(not (totalGrupos = 4 & somaEstados = 6) & (
-                                                        (currentStClient = 1 & currentStClient2 = 1 & currentStClient3 = 1) or & currentStClient4 = 3) or
-                                                        (currentStClient = 1 & currentStClient2 = 1 & currentStClient3 = 3) or & currentStClient4 = 1) or
-                                                        (currentStClient = 1 & currentStClient2 = 3 & currentStClient3 = 1) or & currentStClient4 = 1) or
-                                                        (currentStClient = 3 & currentStClient2 = 1 & currentStClient3 = 1) or & currentStClient4 = 1) or
 
+            (*(not (totalGrupos = 4 & somaEstados = 5) or COMPLETAR) &*)           
+
+            (*(not (totalGrupos = 4 & somaEstados = 6 & (
+                                                        (currentStClient = 1 & currentStClient2 = 1 & currentStClient3 = 1 & currentStClient4 = 3) or
+                                                        (currentStClient = 1 & currentStClient2 = 1 & currentStClient3 = 3 & currentStClient4 = 1) or
+                                                        (currentStClient = 1 & currentStClient2 = 3 & currentStClient3 = 1 & currentStClient4 = 1) or
+                                                        (currentStClient = 3 & currentStClient2 = 1 & currentStClient3 = 1 & currentStClient4 = 1)
+                                                        )) or COMPLETAR) & *)
+
+            (*(not (totalGrupos = 4 & somaEstados = 6 & ((currentStClient = 2 & currentStClient2 = 2 & currentStClient3 = 1 & currentStClient4 = 1) or
+                                                        (currentStClient = 2 & currentStClient2 = 1 & currentStClient3 = 1 & currentStClient4 = 2) or
+                                                        (currentStClient = 1 & currentStClient2 = 1 & currentStClient3 = 2 & currentStClient4 = 2) or
+                                                        (currentStClient = 1 & currentStClient2 = 2 & currentStClient3 = 2 & currentStClient4 = 1) or
+                                                        (currentStClient = 2 & currentStClient2 = 1 & currentStClient3 = 2 & currentStClient4 = 1) or
+                                                        (currentStClient = 1 & currentStClient2 = 2 & currentStClient3 = 1 & currentStClient4 = 2)
+                                                        )) or COMPLETAR) & *)
+
+             (*(not (totalGrupos = 4 & somaEstados = 7 & ((currentStClient = 1 & currentStClient2 = 2 & currentStClient3 = 2 & currentStClient4 = 2) or
+                                                        (currentStClient = 2 & currentStClient2 = 2 & currentStClient3 = 2 & currentStClient4 = 1) or
+                                                        (currentStClient = 2 & currentStClient2 = 2 & currentStClient3 = 1 & currentStClient4 = 2) or
+                                                        (currentStClient = 2 & currentStClient2 = 1 & currentStClient3 = 2 & currentStClient4 = 2) 
+                                                        )) or COMPLETAR) & *)   
+
+             (*(not (totalGrupos = 4 & somaEstados = 7 & ((currentStClient = 3 & currentStClient2 = 1 & currentStClient3 = 2 & currentStClient4 = 1) or
+                                                        (currentStClient = 1 & currentStClient2 = 1 & currentStClient3 = 2 & currentStClient4 = 3) or
+                                                        (currentStClient = 1 & currentStClient2 = 2 & currentStClient3 = 3 & currentStClient4 = 1) or
+                                                        (currentStClient = 1 & currentStClient2 = 3 & currentStClient3 = 2 & currentStClient4 = 1) or
+
+                                                        (currentStClient = 3 & currentStClient2 = 1 & currentStClient3 = 1 & currentStClient4 = 2) or
+                                                        (currentStClient = 2 & currentStClient2 = 1 & currentStClient3 = 1 & currentStClient4 = 3) or
+                                                        (currentStClient = 1 & currentStClient2 = 2 & currentStClient3 = 1 & currentStClient4 = 3) or
+                                                        (currentStClient = 1 & currentStClient2 = 1 & currentStClient3 = 3 & currentStClient4 = 2) or
                                                         
-                                                        (currentStClient = 2 & currentStClient2 = 2 & currentStClient3 = 1) or & currentStClient4 = 1) or
-                                                        (currentStClient = 2 & currentStClient2 = 1 & currentStClient3 = 1) or & currentStClient4 = 2) or
-                                                        (currentStClient = 1 & currentStClient2 = 1 & currentStClient3 = 2) or & currentStClient4 = 2) or
-                                                        (currentStClient = 1 & currentStClient2 = 2 & currentStClient3 = 2) or & currentStClient4 = 1)
-                                                         ) or COMPLETAR) & *)
+                                                        (currentStClient = 2 & currentStClient2 = 1 & currentStClient3 = 3 & currentStClient4 = 1) or
+                                                        (currentStClient = 3 & currentStClient2 = 2 & currentStClient3 = 1 & currentStClient4 = 1) or
+                                                        (currentStClient = 2 & currentStClient2 = 3 & currentStClient3 = 1 & currentStClient4 = 1) or
+                                                        (currentStClient = 1 & currentStClient2 = 3 & currentStClient3 = 1 & currentStClient4 = 2)
+                                                         )) or COMPLETAR) & *)                                                        
 
-             (*(not (totalGrupos = 4 & somaEstados = 7) & (
-                                                        (currentStClient = 1 & currentStClient2 = 2 & currentStClient3 = 2) or & currentStClient4 = 2) or
-                                                        (currentStClient = 2 & currentStClient2 = 2 & currentStClient3 = 2) or & currentStClient4 = 1) or
-                                                        (currentStClient = 2 & currentStClient2 = 2 & currentStClient3 = 1) or & currentStClient4 = 2) or
-                                                        (currentStClient = 2 & currentStClient2 = 1 & currentStClient3 = 2) or & currentStClient4 = 2) or
+            (not (totalGrupos = 4 & somaEstados = 8 & (currentStClient = 2 & currentStClient2 = 2 & currentStClient3 = 2 & currentStClient4 = 2)                                       
+                                                       ) or tresGpPedem) & 
 
-                                                        
+(*              (not (totalGrupos = 4 & somaEstados = 8 & (
+                                                        (currentStClient = 1 & currentStClient2 = 1 & currentStClient3 = 3 & currentStClient4 = 3) or
+                                                        (currentStClient = 1 & currentStClient2 = 3 & currentStClient3 = 3 & currentStClient4 = 1) or
+                                                        (currentStClient = 3 & currentStClient2 = 3 & currentStClient3 = 1 & currentStClient4 = 1) or
+                                                        (currentStClient = 3 & currentStClient2 = 1 & currentStClient3 = 1 & currentStClient4 = 3)
+                                                         )) or COMPLETAR) & *)
 
+(*              (not (totalGrupos = 4 & somaEstados = 8 & (
+                                                        (currentStClient = 1 & currentStClient2 = 3 & currentStClient3 = 2 & currentStClient4 = 2) or
+                                                        (currentStClient = 2 & currentStClient2 = 1 & currentStClient3 = 2 & currentStClient4 = 3) or
+                                                        (currentStClient = 2 & currentStClient2 = 3 & currentStClient3 = 1 & currentStClient4 = 2) or
+                                                        (currentStClient = 2 & currentStClient2 = 3 & currentStClient3 = 2 & currentStClient4 = 1) or
 
+                                                        (currentStClient = 1 & currentStClient2 = 2 & currentStClient3 = 2 & currentStClient4 = 3) or
+                                                        (currentStClient = 2 & currentStClient2 = 1 & currentStClient3 = 3 & currentStClient4 = 2) or
+                                                        (currentStClient = 3 & currentStClient2 = 2 & currentStClient3 = 1 & currentStClient4 = 2) or
+                                                        (currentStClient = 3 & currentStClient2 = 2 & currentStClient3 = 2 & currentStClient4 = 1) or 
 
-                                                        (currentStClient = 1 & currentStClient2 = 1 & currentStClient3 = 2) or & currentStClient4 = 3) or
-                                                        (currentStClient = 1 & currentStClient2 = 2 & currentStClient3 = 3) or & currentStClient4 = 1) or
-                                                        (currentStClient = 2 & currentStClient2 = 3 & currentStClient3 = 1) or & currentStClient4 = 1) or
-                                                        (currentStClient = 3 & currentStClient2 = 1 & currentStClient3 = 1) or & currentStClient4 = 2) or
+                                                        (currentStClient = 2 & currentStClient2 = 2 & currentStClient3 = 1 & currentStClient4 = 3) or
+                                                        (currentStClient = 2 & currentStClient2 = 2 & currentStClient3 = 3 & currentStClient4 = 1) or
+                                                        (currentStClient = 1 & currentStClient2 = 2 & currentStClient3 = 3 & currentStClient4 = 2) or
+                                                        (currentStClient = 3 & currentStClient2 = 1 & currentStClient3 = 2 & currentStClient4 = 2)
+                                                        )) or COMPLETAR) & *)
 
-                                                        (currentStClient = 1 & currentStClient2 = 2 & currentStClient3 = 1) or & currentStClient4 = 3) or
-                                                        (currentStClient = 2 & currentStClient2 = 1 & currentStClient3 = 3) or & currentStClient4 = 1) or
-                                                        (currentStClient = 1 & currentStClient2 = 3 & currentStClient3 = 1) or & currentStClient4 = 2) or
-                                                        (currentStClient = 3 & currentStClient2 = 1 & currentStClient3 = 2) or & currentStClient4 = 1) or
-
-                                                        (currentStClient = 1 & currentStClient2 = 1 & currentStClient3 = 3) or & currentStClient4 = 2) or
-                                                        (currentStClient = 1 & currentStClient2 = 3 & currentStClient3 = 2) or & currentStClient4 = 1) or
-                                                        (currentStClient = 3 & currentStClient2 = 2 & currentStClient3 = 1) or & currentStClient4 = 1) or
-                                                        (currentStClient = 2 & currentStClient2 = 1 & currentStClient3 = 1) or & currentStClient4 = 3) or
-
-                                                        (currentStClient = 3 & currentStClient2 = 1 & currentStClient3 = 2) or & currentStClient4 = 1) or
-                                                        (currentStClient = 1 & currentStClient2 = 2 & currentStClient3 = 1) or & currentStClient4 = 3) or
-                                                        (currentStClient = 2 & currentStClient2 = 1 & currentStClient3 = 3) or & currentStClient4 = 1) or
-                                                        (currentStClient = 1 & currentStClient2 = 3 & currentStClient3 = 1) or & currentStClient4 = 2)
-
-                                                        
-                                                         ) or COMPLETAR) & *)                                                        
-
-            (not (totalGrupos = 4 & somaEstados = 8) (
-                                                        (currentStClient = 2 & currentStClient2 = 2 & currentStClient3 = 2) or & currentStClient4 = 2)                                       
-                                                        ) or tresGpPedem) & 
-
-(*              (not (totalGrupos = 4 & somaEstados = 8) & (
-                                                        (currentStClient = 1 & currentStClient2 = 1 & currentStClient3 = 3) or & currentStClient4 = 3) or
-                                                        (currentStClient = 1 & currentStClient2 = 3 & currentStClient3 = 3) or & currentStClient4 = 1) or
-                                                        (currentStClient = 3 & currentStClient2 = 3 & currentStClient3 = 1) or & currentStClient4 = 1) or
-                                                        (currentStClient = 3 & currentStClient2 = 1 & currentStClient3 = 1) or & currentStClient4 = 3) or
-
-
-
-                                                        
-                                                        (currentStClient = 1 & currentStClient2 = 2 & currentStClient3 = 2) or & currentStClient4 = 3) or
-                                                        (currentStClient = 2 & currentStClient2 = 2 & currentStClient3 = 3) or & currentStClient4 = 1) or
-                                                        (currentStClient = 2 & currentStClient2 = 3 & currentStClient3 = 1) or & currentStClient4 = 2) or
-                                                        (currentStClient = 3 & currentStClient2 = 1 & currentStClient3 = 2) or & currentStClient4 = 2) or
-
-                                                        (currentStClient = 2 & currentStClient2 = 1 & currentStClient3 = 2) or & currentStClient4 = 3) or
-                                                        (currentStClient = 1 & currentStClient2 = 2 & currentStClient3 = 3) or & currentStClient4 = 2) or
-                                                        (currentStClient = 2 & currentStClient2 = 3 & currentStClient3 = 2) or & currentStClient4 = 1) or
-                                                        (currentStClient = 3 & currentStClient2 = 2 & currentStClient3 = 1) or & currentStClient4 = 2) or 
-
-                                                        (currentStClient = 1 & currentStClient2 = 2 & currentStClient3 = 3) or & currentStClient4 = 2) or
-                                                        (currentStClient = 2 & currentStClient2 = 3 & currentStClient3 = 2) or & currentStClient4 = 1) or
-                                                        (currentStClient = 3 & currentStClient2 = 2 & currentStClient3 = 1) or & currentStClient4 = 2) or
-                                                        (currentStClient = 2 & currentStClient2 = 1 & currentStClient3 = 2) or & currentStClient4 = 3) or
-
-                                                        (currentStClient = 3 & currentStClient2 = 2 & currentStClient3 = 2) or & currentStClient4 = 1) or
-                                                        (currentStClient = 2 & currentStClient2 = 2 & currentStClient3 = 1) or & currentStClient4 = 3) or
-                                                        (currentStClient = 2 & currentStClient2 = 1 & currentStClient3 = 3) or & currentStClient4 = 2) or
-                                                        (currentStClient = 1 & currentStClient2 = 3 & currentStClient3 = 2) or & currentStClient4 = 2)
-                                                         ) or COMPLETAR) & *)
-            (*(not (totalGrupos = 4 & somaEstados = 9) & (
+            (*(not (totalGrupos = 4 & somaEstados = 9 & (
                                                         (currentStClient = 2 & currentStClient2 = 2 & currentStClient3 = 2) or & currentStClient4 = 3) or
                                                         (currentStClient = 2 & currentStClient2 = 2 & currentStClient3 = 3) or & currentStClient4 = 2) or
                                                         (currentStClient = 2 & currentStClient2 = 3 & currentStClient3 = 2) or & currentStClient4 = 2) or
                                                         (currentStClient = 3 & currentStClient2 = 2 & currentStClient3 = 2) or & currentStClient4 = 2) or
+                                                        )) or COMPLETAR) & *)
 
+            (*(not (totalGrupos = 4 & somaEstados = 9 & ( 
+                                                        (currentStClient = 3 & currentStClient2 = 3 & currentStClient3 = 1 & currentStClient4 = 2) or
+                                                        (currentStClient = 3 & currentStClient2 = 3 & currentStClient3 = 2 & currentStClient4 = 1) or
+                                                        (currentStClient = 2 & currentStClient2 = 1 & currentStClient3 = 3 & currentStClient4 = 3) or
+                                                        (currentStClient = 3 & currentStClient2 = 2 & currentStClient3 = 1 & currentStClient4 = 3) or
 
+                                                        (currentStClient = 3 & currentStClient2 = 1 & currentStClient3 = 2 & currentStClient4 = 3) or
+                                                        (currentStClient = 3 & currentStClient2 = 1 & currentStClient3 = 3 & currentStClient4 = 2) or
+                                                        (currentStClient = 3 & currentStClient2 = 2 & currentStClient3 = 3 & currentStClient4 = 1) or
+                                                        (currentStClient = 1 & currentStClient2 = 3 & currentStClient3 = 3 & currentStClient4 = 2) or
 
-                                                        
-                                                        (currentStClient = 1 & currentStClient2 = 2 & currentStClient3 = 3) or & currentStClient4 = 3) or
-                                                        (currentStClient = 2 & currentStClient2 = 3 & currentStClient3 = 3) or & currentStClient4 = 1) or
-                                                        (currentStClient = 3 & currentStClient2 = 3 & currentStClient3 = 1) or & currentStClient4 = 2) or
-                                                        (currentStClient = 3 & currentStClient2 = 1 & currentStClient3 = 2) or & currentStClient4 = 3) or
+                                                        (currentStClient = 1 & currentStClient2 = 2 & currentStClient3 = 3 & currentStClient4 = 3) or
+                                                        (currentStClient = 2 & currentStClient2 = 3 & currentStClient3 = 3 & currentStClient4 = 1) or
+                                                        (currentStClient = 1 & currentStClient2 = 3 & currentStClient3 = 2 & currentStClient4 = 3) or
+                                                        (currentStClient = 2 & currentStClient2 = 3 & currentStClient3 = 1 & currentStClient4 = 3)
+                                                         )) or COMPLETAR) & *)
 
-                                                        (currentStClient = 2 & currentStClient2 = 1 & currentStClient3 = 3) or & currentStClient4 = 3) or
-                                                        (currentStClient = 1 & currentStClient2 = 3 & currentStClient3 = 3) or & currentStClient4 = 2) or
-                                                        (currentStClient = 3 & currentStClient2 = 3 & currentStClient3 = 2) or & currentStClient4 = 1) or
-                                                        (currentStClient = 3 & currentStClient2 = 2 & currentStClient3 = 1) or & currentStClient4 = 3) or
-
-                                                        (currentStClient = 1 & currentStClient2 = 3 & currentStClient3 = 2) or & currentStClient4 = 3) or
-                                                        (currentStClient = 3 & currentStClient2 = 2 & currentStClient3 = 3) or & currentStClient4 = 1) or
-                                                        (currentStClient = 2 & currentStClient2 = 3 & currentStClient3 = 1) or & currentStClient4 = 3) or
-                                                        (currentStClient = 3 & currentStClient2 = 1 & currentStClient3 = 3) or & currentStClient4 = 2) or
-
-                                                        (currentStClient = 3 & currentStClient2 = 2 & currentStClient3 = 3) or & currentStClient4 = 1) or
-                                                        (currentStClient = 2 & currentStClient2 = 3 & currentStClient3 = 1) or & currentStClient4 = 3) or
-                                                        (currentStClient = 3 & currentStClient2 = 1 & currentStClient3 = 3) or & currentStClient4 = 2) or
-                                                        (currentStClient = 1 & currentStClient2 = 3 & currentStClient3 = 2) or & currentStClient4 = 3)
-                                                         ) or COMPLETAR) & *)
             (*(not (totalGrupos = 4 & somaEstados = 10) & (
-                                                        (currentStClient = 1 & currentStClient2 = 3 & currentStClient3 = 3) or & currentStClient4 = 3) or
-                                                        (currentStClient = 3 & currentStClient2 = 3 & currentStClient3 = 3) or & currentStClient4 = 1) or
-                                                        (currentStClient = 3 & currentStClient2 = 3 & currentStClient3 = 1) or & currentStClient4 = 3) or
-                                                        (currentStClient = 3 & currentStClient2 = 1 & currentStClient3 = 3) or & currentStClient4 = 3) or
+                                                        (currentStClient = 1 & currentStClient2 = 3 & currentStClient3 = 3 & currentStClient4 = 3) or
+                                                        (currentStClient = 3 & currentStClient2 = 3 & currentStClient3 = 3 & currentStClient4 = 1) or
+                                                        (currentStClient = 3 & currentStClient2 = 3 & currentStClient3 = 1 & currentStClient4 = 3) or
+                                                        (currentStClient = 3 & currentStClient2 = 1 & currentStClient3 = 3 & currentStClient4 = 3)
+                                                        ) or COMPLETAR) &*)
 
-
-
+            (*(not (totalGrupos = 4 & somaEstados = 10) & (
                                                         
-                                                        (currentStClient = 2 & currentStClient2 = 2 & currentStClient3 = 3) or & currentStClient4 = 3) or
-                                                        (currentStClient = 2 & currentStClient2 = 3 & currentStClient3 = 3) or & currentStClient4 = 2) or
-                                                        (currentStClient = 3 & currentStClient2 = 3 & currentStClient3 = 2) or & currentStClient4 = 2) or
-                                                        (currentStClient = 3 & currentStClient2 = 2 & currentStClient3 = 2) or & currentStClient4 = 3) 
+                                                        (currentStClient = 2 & currentStClient2 = 2 & currentStClient3 = 3 & currentStClient4 = 3) or
+                                                        (currentStClient = 2 & currentStClient2 = 3 & currentStClient3 = 3 & currentStClient4 = 2) or
+                                                        (currentStClient = 3 & currentStClient2 = 3 & currentStClient3 = 2 & currentStClient4 = 2) or
+                                                        (currentStClient = 3 & currentStClient2 = 2 & currentStClient3 = 2 & currentStClient4 = 3) 
                                                         ) or COMPLETAR) &*)
 
             (*(not (totalGrupos = 4 & somaEstados = 11) & (
-                                                        (currentStClient = 2 & currentStClient2 = 3 & currentStClient3 = 3) or & currentStClient4 = 3) or
-                                                        (currentStClient = 3 & currentStClient2 = 3 & currentStClient3 = 3) or & currentStClient4 = 2) or
-                                                        (currentStClient = 3 & currentStClient2 = 3 & currentStClient3 = 2) or & currentStClient4 = 3) or
-                                                        (currentStClient = 3 & currentStClient2 = 2 & currentStClient3 = 3) or & currentStClient4 = 3)
+                                                        (currentStClient = 2 & currentStClient2 = 3 & currentStClient3 = 3 & currentStClient4 = 3) or
+                                                        (currentStClient = 3 & currentStClient2 = 3 & currentStClient3 = 3 & currentStClient4 = 2) or
+                                                        (currentStClient = 3 & currentStClient2 = 3 & currentStClient3 = 2 & currentStClient4 = 3) or
+                                                        (currentStClient = 3 & currentStClient2 = 2 & currentStClient3 = 3 & currentStClient4 = 3)
                                                         ) or COMPLETAR) &*)
 
-            (not (totalGrupos = 3 & somaEstados = 12) or quatroGpEsperam) &       
+            (not (totalGrupos = 4 & somaEstados = 12) or quatroGpEsperam)       
 
-
-
-
-
-
-
-
-             (not (currentStClient = 3 & currentStClient2 = 0 & currentStClient3 = 0 & currentStClient4 = 0) or umGpEspera) &
-
-             (not (currentStClient = 1 & currentStClient2 = 1 & currentStClient3 = 0 & currentStClient4 = 0) or doisGpChegam) &
-             (not (currentStClient = 2 & currentStClient2 = 2 & currentStClient3 = 0 & currentStClient4 = 0) or doisGpPedem) &
-             (not (currentStClient = 3 & currentStClient2 = 3 & currentStClient3 = 0 & currentStClient4 = 0) or doisGpEsperam) &
-
-             (not (currentStClient = 1 & currentStClient2 = 1 & currentStClient3 = 1 & currentStClient4 = 0) or tresGpChegam) &
-             (not (currentStClient = 2 & currentStClient2 = 2 & currentStClient3 = 2 & currentStClient4 = 0) or tresGpPedem) &
-             (not (currentStClient = 3 & currentStClient2 = 3 & currentStClient3 = 3 & currentStClient4 = 0) or tresGpEsperam) &
-
-             (not (currentStClient = 1 & currentStClient2 = 1 & currentStClient3 = 1 & currentStClient4 = 1) or quatroGpChegam) &
-             (not (currentStClient = 2 & currentStClient2 = 2 & currentStClient3 = 2 & currentStClient4 = 2) or quatroGpPedem) &
-             (not (currentStClient = 3 & currentStClient2 = 3 & currentStClient3 = 3 & currentStClient4 = 3) or quatroGpEsperam)
-
+(*          (not (currentStClient = 3 & currentStClient2 = 0 & currentStClient3 = 0 & currentStClient4 = 0) or umGpEspera) &
+            (not (currentStClient = 1 & currentStClient2 = 1 & currentStClient3 = 0 & currentStClient4 = 0) or doisGpChegam)*)
 
      with(robot1GuestH, robot1FoodO, robot1DeliveringF, c1,
           robot2GuestH, robot2FoodO, robot2DeliveringF, c2,
@@ -527,7 +485,6 @@ let
     (idRobot5, ghRobot5, foRobot5, dfRobot5) = inlined robot(robot5GuestH, robot5FoodO, robot5DeliveringF, c5);
     (idRobot6, ghRobot6, foRobot6, dfRobot6) = inlined robot(robot6GuestH, robot6FoodO, robot6DeliveringF, c6);
 
-    
     (currentStClient, presence1) = inlined client(clientEndS);
     (currentStClient2, presence2) = inlined client(clientEndS2);
     (currentStClient3, presence3) = inlined client(clientEndS3);
